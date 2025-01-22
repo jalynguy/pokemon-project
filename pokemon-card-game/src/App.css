@@ -1,0 +1,11 @@
+.App{
+  height: 100%;
+}
+
+.cards{
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  gap:3rem;
+  flex-wrap: wrap;
+}
