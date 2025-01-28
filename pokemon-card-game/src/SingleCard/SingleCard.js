@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import './SingleCard.css';
 export const SingleCard = (props) => {
     const [pokemonName, setPokemonName] = useState('');
-    const [pokemonImage , setPokemonImage] = useState('');
+    const [pokemonImage , setPokemonImage] = useState('https://i.sstatic.net/xeqSS.jpg');
     const [pokemonStats, setPokemonStats] = useState('');
 
     function capitalizeFirstLetter(string) {
@@ -15,10 +15,11 @@ export const SingleCard = (props) => {
     async function getPokemonInfo(){
         try{
             const response = await fetch(props.url);
-            const image = await response.json();
-            setPokemonImage(image.sprites.other["official-artwork"].front_default)
+            const result = await response.json();
+            setPokemonImage(result.sprites.other["official-artwork"].front_default)
             setPokemonStats({
-                type: image.types[0].type.name
+                type: result.types[0].type.name,
+                weight: result.weight
             })
         }
         catch(err){
@@ -36,8 +37,15 @@ export const SingleCard = (props) => {
                 <Card.Img variant='top' src={pokemonImage} alt='Pokemon Image'/> 
                 <Card.Body className='info'>
                     <Card.Title> {pokemonName} </Card.Title>
-                    <Card.Text> Type: {pokemonStats.type} </Card.Text>
-                    <Button variant='primary'> Add to Deck </Button>
+                    <Card.Text className='stats'> 
+                         Type: {pokemonStats.type}
+                    </Card.Text>
+                    {props.isDeck === true && (
+                        <Button variant='danger' onClick={()=>props.handleRemove(props.id)}> Remove From Deck </Button>
+                    )}
+                    {props.isDeck === false && (
+                        <Button variant='primary' onClick={()=>props.handleAdd(props.name, props.url)}> Add to Deck </Button>
+                    )}
                 </Card.Body>
             </Card>
         </>
