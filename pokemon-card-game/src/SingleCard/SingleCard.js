@@ -39,6 +39,8 @@ export const SingleCard = (props) => {
                     <Card.Title> {pokemonName} </Card.Title>
                     <Card.Text className='stats'> 
                          Type: {pokemonStats.type}
+                         <br/>
+                         Weight: {pokemonStats.weight}
                     </Card.Text>
                     {props.isDeck === true && (
                         <Button variant='danger' onClick={()=>props.handleRemove(props.id)}> Remove From Deck </Button>
